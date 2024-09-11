@@ -6,7 +6,7 @@ ConditionFileIsExecutable=/var/lib/azure-init/azure-init
 
 [Service]
 Type=oneshot
-ExecStart=/var/lib/azure-init/azure-init
+ExecStart=/var/lib/azure-init/azure-init --groups sudo
 StandardOutput=journal+console
 StandardError=journal+console
 

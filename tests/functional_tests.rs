@@ -67,6 +67,7 @@ async fn main() {
     println!("VM Health successfully reported");
 
     let username = &cli_args[1];
+    let groups = &cli_args[2];
 
     let keys: Vec<PublicKeys> = vec![
         PublicKeys {
@@ -83,12 +84,17 @@ async fn main() {
         },
     ];
 
-    Provision::new("my-hostname".to_string(), User::new(username, keys))
-        .hostname_provisioners([HostnameProvisioner::Hostnamectl])
-        .user_provisioners([UserProvisioner::Useradd])
-        .password_provisioners([PasswordProvisioner::Passwd])
-        .provision()
-        .expect("Failed to provision host");
+    Provision::new(
+        "my-hostname".to_string(),
+        User::new(username, keys).with_groups(
+            groups.split(",").map(|s| s.to_string()).collect::<Vec<_>>(),
+        ),
+    )
+    .hostname_provisioners([HostnameProvisioner::Hostnamectl])
+    .user_provisioners([UserProvisioner::Useradd])
+    .password_provisioners([PasswordProvisioner::Passwd])
+    .provision()
+    .expect("Failed to provision host");
 
     println!("VM successfully provisioned");
     println!();

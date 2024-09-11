@@ -67,7 +67,7 @@ echo "$PUBLIC_IP"
 scp -o StrictHostKeyChecking=no -i "$PATH_TO_PRIVATE_SSH_KEY" ./target/debug/functional_tests "$VM_ADMIN_USERNAME"@"$PUBLIC_IP":~
 
 echo "Logging into VM..."
-ssh -o StrictHostKeyChecking=no -i "$PATH_TO_PRIVATE_SSH_KEY" "$VM_ADMIN_USERNAME"@"$PUBLIC_IP" 'sudo ./functional_tests test_user'
+ssh -o StrictHostKeyChecking=no -i "$PATH_TO_PRIVATE_SSH_KEY" "$VM_ADMIN_USERNAME"@"$PUBLIC_IP" 'sudo ./functional_tests test_user sudo'
 
 # Delete the resource group
 az group delete -g "$RG" --yes --no-wait
